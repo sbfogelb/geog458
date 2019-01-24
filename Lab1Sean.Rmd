@@ -1,0 +1,56 @@
+---
+title: "GroupLab1"
+author: "sbfogelb"
+date: "January 23, 2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+###Group Lab 1 - Sean visual
+
+```{r}
+Municipalities=read.csv("Municipalities.csv")
+Municipalities2=as_tibble(Municipalities)
+
+Municipalities2
+```
+
+```{r}
+#Renaming output columns to look better on visual
+names(Municipalities) <- c("Year", "Beijing_Enterprises", "Beijing", "Tianjin_Enterprises", "Tianjin", "Shanghai_Enterprises", "Shanghai", "Chongqing_Enterprises", "Chongqing")
+Municipalities
+```
+
+```{r}
+#testplottingdata
+
+plot(Beijing ~ Year, data=Municipalities, xlab="Year", ylab="Beijing Output", main="Beijing Output 1949-2017", col="blue", cex=2, pch=18)
+
+```
+
+```{r}
+#testggplot2 with line
+
+ggplot(data=Municipalities, aes(x=Year, y=Beijing)) +geom_line(alpha=.4) +xlab("Year") +ylab("Beijing Output") +ggtitle("Beijing Output 1949-2017") +theme_bw()
+
+```
+
+```{r}
+#Creating master ggplot object
+
+ggplotMaster <- ggplot(data=Municipalities, aes(x=Year))
+
+```
+
+```{r}
+#adding geom_line objects for each Municipalities
+BeijingOutput <- geom_line(aes(y=Beijing, color="Beijing"), size = 1.1, alpha = 0.5) 
+TianjinOutput <- geom_line(aes(y=Tianjin, color="Tianjin"), size = 1.1, alpha = 0.5) 
+ShanghaiOutput <- geom_line(aes(y=Shanghai, color="Shanghai"), size = 1.1, alpha = 0.5) 
+ChongqingOutput <- geom_line(aes(y=Chongqing, color="Chongqing"), size = 1.1, alpha = 0.5) 
+ggplotMaster + BeijingOutput + TianjinOutput + ShanghaiOutput + ChongqingOutput + ggtitle("Change in Municipality Output 1949-2017") + theme(plot.title = element_text(hjust = 0.5)) + ylab("Output")
+
+```
